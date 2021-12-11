@@ -17,9 +17,10 @@ urlcolor: blue
 linkcolor: Goldenrod
 linkstyle: bold
 aspectratio: 169
-xtitlegraphic: figures/aleph0.png
+titlegraphic: figures/tamuc-logo.eps
+titlegraphic-width: 3cm
 logo: figures/tamuc-logo.eps
-logo-scale: 0.06
+logo-width: 1cm
 date: Fall 2021
 section-titles: false
 toc: true
@@ -38,7 +39,7 @@ biblio-title: "Presentation References"
 
 - I use default **pandoc** themes.
 - This presentation is made with **Frankfurt** theme and **beaver** color theme.
-- I like **professionalfonts** font scheme. 
+- I like **professionalfonts** font scheme.
 
 ## Links
 
@@ -66,7 +67,7 @@ Normal text.
 - Line A
 - Line B
 
-### 
+###
 
 New block without header.
 
@@ -171,15 +172,15 @@ Item A | Item A description | 2
 Item B | Item B description | 5
 Item C | N/A | 100
 
-## Single picture 
+## Single picture
 
 This is how we insert picture. Caption is produced automatically from the alt text.
 
 ```
-![Aleph 0](figures/aleph0.png) 
+![Aleph 0](figures/aleph0.png)
 ```
 
-![Aleph 0](figures/aleph0.png) 
+![Aleph 0](figures/aleph0.png)
 
 ## Two or more pictures in a raw
 
@@ -187,7 +188,7 @@ Here are two pictures in the raw. We can also change two pictures size (height o
 
 ###
 ```
-![](figures/aleph0.png){height=10%}\ ![](figures/aleph0.png){height=30%} 
+![](figures/aleph0.png){height=10%}\ ![](figures/aleph0.png){height=30%}
 ```
 
 ![](figures/aleph0.png){ height=10% }\ ![](figures/aleph0.png){ height=30% }
@@ -321,7 +322,7 @@ Right column list:
 
 :::: column
 
-Text in the right column.  
+Text in the right column.
 
 List from the right column:
 
@@ -389,4 +390,3 @@ List from the right column:
 - No way we go for it!
 - A citation \parencite{IEEEexample:incollection}
 - Another citation \parencite{IEEEexample:article_typical2}
-
