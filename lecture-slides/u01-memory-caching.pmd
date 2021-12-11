@@ -11,7 +11,7 @@ header-includes:
   - \title [Memory]{My Title}
   - \institute[Texas A\&M - Commerce]{Professor \\Department of Computer Science \\Texas A\&M University - Commerce}
   - \usepackage[backend=biber, style=apa]{biblatex}
-  - \addbibresource{sliqdes.bib}
+  - \addbibresource{slides.bib}
   - \hypersetup{allcolors=blue, colorlinks=true}
   - \usepackage[percent]{overpic}
 ---
