@@ -1,0 +1,404 @@
+#+TITLE: Unit 01: Memory and Multilevel Caching Performance
+#+BEAMER_HEADER: \title[Memory]{Memory/Caching}
+#+DATE: Fall 2021
+#+AUTHOR: Derek Harter
+#+EMAIL: derek.harter@tamuc.edu
+#+OPTIONS: H:2 toc:nil num:t
+#+LATEX_CLASS: beamer
+#+LATEX_CLASS_OPTIONS: [presentation]
+#+BEAMER_THEME: Madrid
+#+COLUMNS: %45ITEM %10BEAMER_ENV(Env) %10BEAMER_ACT(Act) %4BEAMER_COL(Col)
+#+LaTeX_HEADER: \logo{\includegraphics[scale=0.07]{figures/tamuc-logo}}
+#+LaTeX_HEADER: \institute[Texas A\&M - Commerce]{Professor \\Department of Computer Science \\Texas A\&M University - Commerce}
+#+LaTeX_HEADER: \usepackage[percent]{overpic}
+
+# No presentation section
+* 
+** Memory
+ 
+Objectives:
+
+1. List and describe the typical levels and characteristics of
+   computer memory.
+2. Introduce and discuss the concept of locality and analyze the
+   performance of a multilevel memory hierarchy.
+3. Extend multilevel cache performance to 3 or more levels to
+   calculate effective access time.
+
+** Memory Constraints
+*** A block
+   :PROPERTIES:
+   :BEAMER_col: 0.2
+   :END:
+   \begin{overpic}[scale=0.15, trim=35 80 35 80, clip]{figures/blue-right-arrow}
+   \put (1, 30) {Constraints}
+   \end{overpic}
+   \vspace{0.5in}
+
+   \begin{overpic}[scale=0.15, trim=35 80 35 80, clip]{figures/blue-right-arrow}
+     \put (3, 30) {Amount}
+   \end{overpic}
+   \vspace{0.25in}
+
+   \begin{overpic}[scale=0.15, trim=35 80 35 80, clip]{figures/blue-right-arrow}
+   \put (3, 30) {Speed}
+   \end{overpic}
+   \vspace{0.25in}
+
+   \begin{overpic}[scale=0.15, trim=35 80 35 80, clip]{figures/blue-right-arrow}
+   \put (3, 30) {Cost}
+   \end{overpic}
+
+*** 
+    :PROPERTIES:
+    :BEAMER_col: 0.8
+    :END:
+    - Amount of memory
+    - Speed to access memory
+    - Cost of the memory (speed and cost tradeoff)
+    \begin{center}
+    \line(1,0){250}
+    \end{center}
+
+    We always want more memory.  Most applications require some minimum
+    amount of memory to work.
+    \begin{center}
+    \line(1,0){250}
+    \end{center}
+
+    Faster memory access means can finish programs faster or process
+    more data in same time.
+    \begin{center}
+    \line(1,0){250}
+    \end{center}
+
+    There is a tradeoff.  No perfect memory exists.  You can have lots of fast 
+    memory, but it is going to cost you.
+
+** Memory Relationships
+
+Tradeoffs: 
+
+- Faster access time, greater cost per bit
+- Greater capacity, smaller cost per bit
+- Greate capacity, slower access speed
+
+** The memory Hierarchy
+
+***                                                                   :BMCOL:
+    :PROPERTIES:
+    :BEAMER_col: 0.5
+    :END:
+    Going down the hierarchy
+    - Decreasing cost per bit
+    - Increasing capacity
+    - Increasing access time
+    - **decreasing frequencey of access to the memory by CPU**
+
+***                                                                   :BMCOL:
+    :PROPERTIES:
+    :BEAMER_col: 0.5
+    :END:
+    #+ATTR_LATEX: width=\textwidth
+    \begin{overpic}[scale=0.2]{figures/fig-1-14-memory-hierarchy.png}
+    \put (11, 90) {\rotatebox{-90}{Down the}}
+    \put (1, 90) {\rotatebox{-90}{Hierarchy $\rightarrow$}}
+    \end{overpic}
+
+** Performance of Two Level Memory
+
+***                                                                   :BMCOL:
+    :PROPERTIES:
+    :BEAMER_col: 0.5
+    :END:
+    *Definitions*:
+
+    $E =$ effective access time
+
+    $H =$ hit ratio
+
+    $T_c =$ access time for cache (faster level memory)
+
+    $T_m =$ access time for memory (slower level memory)
+
+*** Two Level Memory Performance                            :B_theorem:BMCOL:
+    :PROPERTIES:
+    :BEAMER_col: 0.5
+    :BEAMER_env: theorem
+    :END:
+    Using weighted average, we can compute effective access time for a two level cache.
+    \begin{equation}
+    \begin{split}
+    E &= H T_c + M (T_c + T_m) \\
+      &= H T_c + (1 - H) (T_c + T_m) \\
+      &= T_c + T_m - H T_m
+    \end{split}
+    \end{equation}
+
+** Performance of a Simple Two Level Memory
+
+***                                                                   :BMCOL:
+    :PROPERTIES:
+    :BEAMER_col: 0.5
+    :END:
+    Question: What is the effective access time given a hit ratio of 
+    - 90%?  
+    - 95%? 
+    - 99%?
+    \vspace{0.1in}
+
+    | Cache | 1000 bytes    | $T_c = 0.1 \mu s$ |
+    | RAM   | 100,000 bytes | $T_m = 1 \mu s$   |
+
+    #+ATTR_LATEX: :scale 0.5
+    [[./figures/happy-cpu.png]]
+
+
+
+***                                                                   :BMCOL:
+    :PROPERTIES:
+    :BEAMER_col: 0.5
+    :END:
+    #+CAPTION: Figure 1.15 Performance of a simple two-level memory
+    #+NAME: fig:cache-performance
+    #+ATTR_LATEX: :scale 0.55
+    [[./figures/fig-1-15-cache-performance.png]]
+
+** Multi-level Memory Performance
+
+***                                                                   :BMCOL:
+    :PROPERTIES:
+    :BEAMER_col: 0.25
+    :END:
+    We can extend the idea to 3 or more levels
+    \vspace{0.2in}
+
+    Not unusual to have registers, L1, L2, L3 cache, RAM and VM
+    \vspace{0.2in}
+
+    Basic idea, find effective time for 2 levels, then combine with next
+    \vspace{0.2in}
+
+*** Multi-level memory                                      :B_example:BMCOL:
+    :PROPERTIES:
+    :BEAMER_col: 0.75
+    :BEAMER_env: example
+    :END:
+    | $T_{L1} = 0.1 \mu s$    | $H_{L1} = 0.95$ |
+    | $T_{L2} = 1.0 \mu s$    | $H_{L2} = 0.99$ |
+    | $T_{RAM} = 20.0 \mu s$  |                 |
+    What is the effective access time of the system?
+    \begin{equation}
+    \begin{split}
+    E_{L2/RAM} &= (H_{L2} \times T_{L2}) + (M_{L2} \times [T_{RAM} + T_{L2}]) \\
+               &= (0.99 \times 1.0) + (0.01 \times 21.0) \\
+	       &= 1.2
+    \end{split}
+    \end{equaiton}
+    Then combine with L1 using weighted average:
+    \begin{equation}
+    \begin{split}
+    E_{L1/L2/RAM} &= (H_{L1} \times T_{L1}) + (M_{L1} \times [T_{L1} + E_{L2/RAM}]) \\
+               &= (0.95 \times 0.1) + (0.05 \times 1.3) \\
+	       &= 0.16
+    \end{split}
+    \end{equaiton}
+
+
+** Principle of Locality
+
+*** A block
+   :PROPERTIES:
+   :BEAMER_col: 0.2
+   :END:
+   \begin{overpic}[scale=0.15, trim=35 80 35 80, clip]{figures/blue-right-arrow}
+     \put (1, 30) {Cluster}
+   \end{overpic}
+   \vspace{0.2in}
+
+   \begin{overpic}[scale=0.15, trim=35 80 35 80, clip]{figures/blue-right-arrow}
+     \put (1, 30) {Hit Ratio}
+   \end{overpic}
+   \vspace{0.2in}
+
+   \begin{overpic}[scale=0.15, trim=35 80 35 80, clip]{figures/blue-right-arrow}
+     \put (1, 30) {Hierarchy}
+   \end{overpic}
+   \vspace{0.4in}
+
+*** 
+    :PROPERTIES:
+    :BEAMER_col: 0.8
+    :END:
+    Memory references by the CPU tend to cluster **Locality of Reference**
+    \vspace{0.3in}
+
+    Data is organized so that the percentage of access to each lower level is
+    substantially less than that of the level above **Hit Ratio**
+    \vspace{0.3in}
+
+    Can be extended over multiple leves to engineer cost and performance effective memory
+    solutions **Memory Hierarchy**
+    \vspace{0.3in}
+
+** Cache Memory
+
+Properties
+
+- Invisible to the OS
+- Interacts with other memory management hardware
+- CPU must access memory at least once per instruction cycle (why?)
+
+Why Have a Cache?
+
+- **Problem:** CPU execution is effectively limited by memory cycle time.
+- **Solution:** Exploit the principle of locality with a small, fast memory, to increase
+  the effective access time.
+
+** Cache Principles
+*** 
+   :PROPERTIES:
+   :BEAMER_col: 0.2
+   :END:
+   \begin{overpic}[scale=0.15, trim=35 80 35 80, clip]{figures/blue-right-arrow}
+     \put (1, 30) {Cache}
+   \end{overpic}
+   \vspace{0.3in}
+
+   \begin{overpic}[scale=0.15, trim=35 80 35 80, clip]{figures/blue-right-arrow}
+     \put (1, 30) {Algorithm}
+   \end{overpic}
+   \vspace{0.75in}
+
+   \begin{overpic}[scale=0.15, trim=35 80 35 80, clip]{figures/blue-right-arrow}
+     \put (1, 30) {Hits}
+   \end{overpic}
+   \vspace{0.5in}
+
+*** 
+    :PROPERTIES:
+    :BEAMER_col: 0.8
+    :END:
+    Contains a copy of only a (small) portion of main memory
+    \vspace{0.3in}
+
+    - CPU fist checks if data it needs is in cache, if so **HIT!**
+    - if not **MISS**
+      - a **BLOCK** of memory is read into cache (and access tried again).
+      - Notice a **BLOCK** is read in, not just the single value needed.
+    \vspace{0.3in}
+
+    Because of locality of reference, that block is likely to contain many
+    future needed references.  So will likely have high Hit Ratio.
+    \vspace{0.3in}
+
+
+** Cache and Main Memory
+***                                                                   :BMCOL:
+    :PROPERTIES:
+    :BEAMER_col: 0.1
+    :END:
+    #+ATTR_LATEX: :scale 0.5
+    [[./figures/happy-cpu.png]]
+
+
+
+***                                                                   :BMCOL:
+    :PROPERTIES:
+    :BEAMER_col: 0.9
+    :END:
+    #+CAPTION: Figure 1.16 Cache and Main Memory
+    #+NAME: fig:cache-memory-levels
+    #+ATTR_LATEX: :scale 0.4
+    [[./figures/fig-1-16-cache-memory-levels.png]]
+
+
+** Cache/Main-Memory Structure
+
+    #+CAPTION: Figure 1.17 Cache/Main-Memory Structure
+    #+NAME: fig:cache-memory-structure
+    #+ATTR_LATEX: :scale 0.33
+    [[./figures/fig-1-17-cache-memory-structure.png]]
+
+
+** Cache Algorithm (Read Operations)
+***                                                                   :BMCOL:
+    :PROPERTIES:
+    :BEAMER_col: 0.2
+    :END:
+    Write operation for cache is similar (still need to check hit/miss).
+    #+ATTR_LATEX: :scale 0.5
+    [[./figures/happy-cpu.png]]
+
+
+
+***                                                                   :BMCOL:
+    :PROPERTIES:
+    :BEAMER_col: 0.8
+    :END:
+    #+CAPTION: Figure 1.18 Cache Algorithm (read operation)
+    #+NAME: fig:cache-algorithm
+    #+ATTR_LATEX: :scale 0.3
+    [[./figures/fig-1-18-cache-algorithm.png]]
+
+
+** Review Questions
+
+1. In a two-level memory hierarchy, if we make 5 memory references, and 3 memory references
+   were in cache, while 2 references need to be fetch from memory, we have a Hit Ratio of:
+   #+ATTR_LATEX: :options [(a)]
+   1. 60%
+   2. 50%
+   3. 40%
+   4. 0%
+
+2. As one proceeds down the memory hierarchy (i.e. from inboard memory registers on the
+   CPU, to cache to main memory to offline storage), the following condition(s) apply
+   #+ATTR_LATEX: :options [(a)]
+   1. Increasing cost per bit
+   2. Decreasing capacity
+   3. Increasing access time
+   4. All of the above
+
+** Example Problems
+
+Consider a memory system with the following characteristics:
+
+| $T_c = 100$ ns  | $C_c = 0.01$ cents/bit  |
+| $T_m = 1200$ ns | $C_m = 0.001$ cents/bit |
+
+1. What is the cost of 1 M**byte** of main memory?
+2. What is the cost of 1 Mbyte of memory using cache memory technology?
+3. If the effective access time is 10% greater than the cache access time, what is the
+   hit ratio $H$?
+
+
+** Example Solutions
+
+1. 1 Mbyte = 8 Mbits.  So for main memory 
+   \begin{equation}
+   \begin{split}
+   C &= 8 \text{bit/byte} \times 10^6 \text{bytes} \times 0.001 \text{cents/bit} \\
+     &= 8000.00 \text{cents} \\
+     &= \text{\$80.00} 
+   \end{split}
+   \end{equation}
+2. For cache, same but it is 10 times more expensive.  So $800.00.
+
+** Example Solutions
+
+3. [@3] We are given effective access time as 10% more than $T_c$, so
+   $E = 110$ ns.
+   \begin{equation}
+   \begin{split}
+   E &= T_c + T_m - H T_m \\
+   T_c &= 100 \\
+   T_m &= 1200 \\
+   \\
+   110 &= 100 + 1200 - 1200 H \\
+   1200 H &= 1190 \\
+   H &= \frac{1190}{1200} = 0.991666
+   \end{split}
+   \end{equation}
+
+Therefore a hit ratio of 99.166% will result in the asked for effective access time.

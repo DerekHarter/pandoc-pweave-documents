@@ -1,0 +1,392 @@
+---
+title: "My Wonderful Presentation"
+title-short: "Short Title"
+subtitle: "A not so good subtitle"
+author: "Derek Harter"
+institute:
+  - "Professor"
+  - "Department of Computer Science"
+  - "Texas A&M University - Commerce"
+institute-short: "TAMUC"
+topic: "Pandoc how-to"
+theme: "Madrid"
+fonttheme: "professionalfonts"
+mainfont: "Hack Nerd Font"
+fontsize: 11pt
+urlcolor: blue
+linkcolor: Goldenrod
+linkstyle: bold
+aspectratio: 169
+xtitlegraphic: figures/aleph0.png
+logo: figures/tamuc-logo.eps
+logo-scale: 0.06
+date: Fall 2021
+section-titles: false
+toc: true
+lot: true
+lof: true
+toc-title: "To Be Covered in this Talk"
+biblatex: true
+bibliography: slides.bib
+biblio-title: "Presentation References"
+
+---
+
+# General information
+
+## Themes, fonts, etc.
+
+- I use default **pandoc** themes.
+- This presentation is made with **Frankfurt** theme and **beaver** color theme.
+- I like **professionalfonts** font scheme. 
+
+## Links
+
+- Matrix of beamer themes: [https://hartwork.org/beamer-theme-matrix/](https://hartwork.org/beamer-theme-matrix/)
+- Font themes: [http://www.deic.uab.es/~iblanes/beamer_gallery/index_by_font.html](http://www.deic.uab.es/~iblanes/beamer_gallery/index_by_font.html)
+- Nerd Fonts: [https://nerdfonts.com](https://nerdfonts.com)
+
+# Formatting
+## Text formatting
+
+Normal text.
+*Italic text* and **bold text**.
+~~Strike out~~ is supported.
+
+## Notes
+
+> This is a note.
+> > Nested notes are not supported.
+> And it continues.
+
+## Blocks
+
+### This is a block A
+
+- Line A
+- Line B
+
+### 
+
+New block without header.
+
+### This is a block B.
+
+- Line C
+- Line D
+
+## Listings
+
+Listings out of the block.
+
+```sh
+#!/bin/bash
+echo "Hello world!"
+echo "line"
+```
+### Listings in the block.
+
+```sh
+#!/bin/bash
+echo "Hello world!"
+echo "line"
+```
+
+## Python Code {.fragile}
+
+Does python code block get syntax highlighting?
+
+```python
+#!/usr/bin/env python
+x = 5
+s = "Hello world  "
+print(x * s)
+```
+
+## Python Figure {.fragile}
+
+If we create a figure as output frompython code block, does it work?
+
+```{python, caption='My Great Code Chunk Figure', f_size=(3,1.0)}
+import numpy as np
+import matplotlib.pyplot as plt
+
+x = np.linspace(-np.pi, np.pi)
+plt.plot(x, np.sin(x), label='sin(x)')
+plt.plot(x, np.cos(x), label='cos(x)')
+plt.legend()
+```
+
+## Python Figure in Columns {.fragile}
+
+::: columns
+
+:::: column
+
+If we create a figure as output from python code block, does it work?
+
+\vspace{0.1in}
+
+```{python, evaluate=False}
+import numpy as np
+import matplotlib.pyplot as plt
+
+x = np.linspace(-np.pi, np.pi)
+plt.plot(x, np.sin(x), label='sin(x)')
+plt.plot(x, np.cos(x), label='cos(x)')
+plt.yticks([-1.0, 0.0, 1.0])
+plt.xticks([-np.pi, -np.pi/2, 0, np.pi/2, np.pi],
+           [r'$-\pi$', r'$\frac{-\pi}{2}$', r'$0$', r'$\frac{\pi}{2}$', r'$\pi$'])
+plt.grid()
+plt.legend()
+```
+
+::::
+
+:::: column
+
+```{python, echo=False, evaluate=True, fig=True, caption='My Great Code Chunk Figure in a column', f_size=(3,3), }
+import numpy as np
+import matplotlib.pyplot as plt
+
+x = np.linspace(-np.pi, np.pi)
+plt.plot(x, np.sin(x), label='sin(x)')
+plt.plot(x, np.cos(x), label='cos(x)')
+plt.yticks([-1.0, 0.0, 1.0])
+plt.xticks([-np.pi, -np.pi/2, 0, np.pi/2, np.pi],
+           [r'$-\pi$', r'$\frac{-\pi}{2}$', r'$0$', r'$\frac{\pi}{2}$', r'$\pi$'])
+plt.grid()
+plt.legend()
+```
+
+::::
+
+:::
+
+## Table
+
+**Item** | **Description** | **Q-ty**
+:--------|-----------------:|:---:
+Item A | Item A description | 2
+Item B | Item B description | 5
+Item C | N/A | 100
+
+## Single picture 
+
+This is how we insert picture. Caption is produced automatically from the alt text.
+
+```
+![Aleph 0](figures/aleph0.png) 
+```
+
+![Aleph 0](figures/aleph0.png) 
+
+## Two or more pictures in a raw
+
+Here are two pictures in the raw. We can also change two pictures size (height or width).
+
+###
+```
+![](figures/aleph0.png){height=10%}\ ![](figures/aleph0.png){height=30%} 
+```
+
+![](figures/aleph0.png){ height=10% }\ ![](figures/aleph0.png){ height=30% }
+
+## Lists
+
+1. Idea 1
+2. Idea 2
+	- genius idea A
+	- more genius 2
+3. Conclusion
+
+
+## Two columns of equal width
+
+::: columns
+
+:::: column
+
+Left column text.
+
+Another text line.
+
+::::
+
+:::: column
+
+- Item 1.
+- Item 2.
+- Item 3.
+
+::::
+
+:::
+
+## Two columns of with 40:60 split
+
+::: columns
+
+:::: {.column width=40%}
+
+Left column text.
+
+Another text line.
+
+::::
+
+:::: {.column width=60%}
+
+- Item 1.
+- Item 2.
+- Item 3.
+
+::::
+
+:::
+
+## Three columns with equal split
+
+::: columns
+
+:::: column
+
+Left column text.
+
+Another text line.
+
+::::
+
+:::: column
+
+Middle column list:
+
+1. Item 1.
+2. Item 2.
+
+::::
+
+:::: column
+
+Right column list:
+
+- Item 1.
+- Item 2.
+
+::::
+
+:::
+
+## Three columns with 30:40:30 split
+
+::: columns
+
+:::: {.column width=30%}
+
+Left column text.
+
+Another text line.
+
+::::
+
+:::: {.column width=40%}
+
+Middle column list:
+
+1. Item 1.
+2. Item 2.
+
+::::
+
+:::: {.column width=30%}
+
+Right column list:
+
+- Item 1.
+- Item 2.
+
+::::
+
+:::
+
+## Two columns: image and text
+
+::: columns
+
+:::: column
+
+![](figures/aleph0.png){height=50%}
+
+::::
+
+:::: column
+
+Text in the right column.  
+
+List from the right column:
+
+- Item 1.
+- Item 2.
+::::
+
+:::
+
+## Two columns: image and table
+
+::: columns
+
+:::: column
+
+![](figures/aleph0.png){height=50%}
+
+::::
+
+:::: column
+
+| **Item** | **Option** |
+|:---------|:----------:|
+| Item 1   | Option 1   |
+| Item 2   | Option 2   |
+
+::::
+
+:::
+
+## Fancy layout
+
+### Proposal
+
+- Point A
+- Point B
+
+::: columns
+
+:::: column
+
+### Pros
+
+- Good
+- Better
+- Best
+
+::::
+
+:::: column
+
+### Cons
+
+- Bad
+- Worse
+- Worst
+
+::::
+
+:::
+
+### Conclusion
+
+- Let's go for it!
+- No way we go for it!
+- A citation \parencite{IEEEexample:incollection}
+- Another citation \parencite{IEEEexample:article_typical2}
+

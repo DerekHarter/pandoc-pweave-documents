@@ -1,0 +1,87 @@
+---
+title: "Unit 01: Memory Caching and Multilevel Caching Performance"
+author: Derek Harter
+date: Fall 2021
+theme: Madrid
+
+toc: false
+section-titles: false
+header-includes:
+  - \logo{\includegraphics[scale=0.07]{figures/tamuc-logo}}
+  - \title [Memory]{My Title}
+  - \institute[Texas A\&M - Commerce]{Professor \\Department of Computer Science \\Texas A\&M University - Commerce}
+  - \usepackage[backend=biber, style=apa]{biblatex}
+  - \addbibresource{sliqdes.bib}
+  - \hypersetup{allcolors=blue, colorlinks=true}
+  - \usepackage[percent]{overpic}
+---
+
+# Memory
+
+Objectives:
+
+1. List and describe the typical levels and characteristics of
+   computer memory.
+2. Introduce and discuss the concept of locality and analyze the
+   performance of a multilevel memory hierarchy.
+3. Extend multilevel cache performance to 3 or more levels to
+   calculate effective access time.
+
+# Memory Constraints
+
+::: columns
+
+:::: {.column width=20%}
+
+   \begin{overpic}[scale=0.15, trim=20 80 20 80, clip]{figures/blue-right-arrow}
+   \put (1, 30) {Constraints}
+   \end{overpic}
+   \vspace{0.25in}
+
+   \begin{overpic}[scale=0.15, trim=35 80 35 80, clip]{figures/blue-right-arrow}
+     \put (3, 30) {Amount}
+   \end{overpic}
+   \vspace{0.2in}
+
+   \begin{overpic}[scale=0.15, trim=35 80 35 80, clip]{figures/blue-right-arrow}
+   \put (3, 30) {Speed}
+   \end{overpic}
+   \vspace{0.2in}
+
+   \begin{overpic}[scale=0.15, trim=35 80 35 80, clip]{figures/blue-right-arrow}
+   \put (3, 30) {Cost}
+   \end{overpic}
+
+::::
+
+:::: {.column width=80%}
+
+- Amount of memory
+- Speed to access memory
+- Cost of the memory (speed and cost tradeoff)
+
+\begin{center}
+\line(1,0){300}
+\end{center}
+
+We always want more memory.  Most applications require some minimum
+amount of memory to work.
+\begin{center}
+\line(1,0){300}
+\end{center}
+
+Faster memory access means can finish programs faster or process
+more data in same time.
+\begin{center}
+\line(1,0){300}
+\end{center}
+
+There is a tradeoff.  No perfect memory exists.  You can have lots of fast
+
+::::
+
+:::
+
+# Bibliography
+\nocite{IEEEexample:incollection}
+\printbibliography
